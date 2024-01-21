@@ -1,0 +1,55 @@
+
+import java.io.File;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Map;
+import java.util.Scanner;
+
+public final class Demo {
+
+    public static boolean isValid(String s) {
+
+        Deque<Character> stack = new ArrayDeque<>();
+        Map<Character, Character> map = Map.of(']', '[', '}', '{', ')', '(');
+
+        for (char ch : s.toCharArray()) {
+
+            if (!stack.isEmpty() && map.containsKey(ch)) {
+
+                if (stack.peek() == map.get(ch)) {
+                    stack.pop();
+                } else {
+                    return false;
+                }
+
+            } else {
+
+                stack.push(ch);
+            }
+
+        }
+
+        return stack.isEmpty();
+
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        Scanner scanner = null;
+        try {
+
+            scanner = new Scanner(new File("input.txt"));
+
+            String s = scanner.nextLine();
+            boolean res = isValid(s);
+            System.out.println(res);
+
+        } catch (Exception e) {
+
+            System.out.println("ERROR " + e);
+
+        } finally {
+            scanner.close();
+        }
+    }
+}
