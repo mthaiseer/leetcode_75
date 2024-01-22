@@ -1,0 +1,85 @@
+
+import java.io.File;
+import java.util.Scanner;
+
+public final class Demo {
+
+    static void dfs(int[][] image, int row, int col, int color, int currentColor) {
+
+        int ROW = image.length;
+        int COL = image[0].length;
+
+        if (row < 0 || row >= ROW || col < 0 || col >= COL || image[row][col] != currentColor) {
+            return;
+        }
+
+        if (image[row][col] == currentColor)
+            image[row][col] = color;
+
+        int deltaRow[] = { -1, 0, 1, 0 };
+        int deltaCol[] = { 0, 1, 0, -1 };
+
+        for (int i = 0; i < deltaRow.length; i++) {
+
+            int newRow = row + deltaRow[i];
+            int newCol = col + deltaCol[i];
+            dfs(image, newRow, newCol, color, currentColor);
+
+        }
+
+    }
+
+    public static int[][] floodFill(int[][] image, int sr, int sc, int color) {
+
+        int currentColor = image[sr][sc];
+        if (color == currentColor)
+            return image;
+        dfs(image, sr, sc, color, currentColor);
+
+        return image;
+
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(new File("input.txt"));
+
+            // scanner = new Scanner(System.in);
+            // int t = scanner.nextInt();
+            // while (t > 0) {
+
+            int n = scanner.nextInt();
+            int m = scanner.nextInt();
+
+            int arr[][] = new int[n][m];
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++)
+                    arr[i][j] = scanner.nextInt();
+            }
+
+            int sr = scanner.nextInt();
+            int sc = scanner.nextInt();
+            int color = scanner.nextInt();
+
+            floodFill(arr, sr, sc, color);
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    System.out.print(arr[i][j] + "  ");
+                }
+                System.out.println();
+            }
+
+            // t--;
+
+            // }
+        } catch (Exception e) {
+
+            System.out.println("ERROR " + e);
+
+        } finally {
+            scanner.close();
+        }
+    }
+}

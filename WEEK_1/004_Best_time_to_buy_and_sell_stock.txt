@@ -1,0 +1,55 @@
+
+import java.io.File;
+import java.util.Scanner;
+
+public final class Demo {
+
+    public static int maxProfit(int[] prices) {
+
+        int maxProfit = 0;
+        int currentMinPrice = Integer.MAX_VALUE;
+
+        for (int i = 0; i < prices.length; i++) {
+
+            currentMinPrice = Math.min(currentMinPrice, prices[i]);
+            maxProfit = Math.max(maxProfit, prices[i] - currentMinPrice);
+
+        }
+
+        return maxProfit;
+
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        Scanner scanner = null;
+        try {
+
+            scanner = new Scanner(new File("input.txt"));
+
+            // scanner = new Scanner(System.in);
+            // int t = scanner.nextInt();
+            // while (t > 0) {
+
+            int n = scanner.nextInt();
+
+            int arr[] = new int[n];
+            for (int i = 0; i < n; i++) {
+                arr[i] = scanner.nextInt();
+            }
+
+            int res = maxProfit(arr);
+            System.out.println(res);
+
+            // t--;
+
+            // }
+        } catch (Exception e) {
+
+            System.out.println("ERROR " + e);
+
+        } finally {
+            scanner.close();
+        }
+    }
+}

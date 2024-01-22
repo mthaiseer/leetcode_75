@@ -1,0 +1,49 @@
+
+import java.io.File;
+import java.util.Scanner;
+
+public final class Demo {
+
+    public static boolean isAnagram(String s, String t) {
+
+        if (s.length() != t.length())
+            return false;
+        int n = s.length();
+
+        int freq[] = new int[26];
+        for (int i = 0; i < n; i++) {
+            freq[(int) s.charAt(i) - 'a']++;
+        }
+
+        for (int i = 0; i < n; i++) {
+            if ((int) freq[t.charAt(i) - 'a'] == 0)
+                return false;
+            freq[(int) t.charAt(i) - 'a']--;
+        }
+
+        return true;
+
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(new File("input.txt"));
+
+           
+            String s = scanner.next();
+            String t = scanner.next();
+
+            boolean res = isAnagram(s, t);
+            System.out.println(res);
+
+        } catch (Exception e) {
+
+            System.out.println("ERROR " + e);
+
+        } finally {
+            scanner.close();
+        }
+    }
+}
